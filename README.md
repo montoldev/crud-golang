@@ -1,6 +1,7 @@
 Step to run :
-1. use command ```run main.go```
-2. import postman with crud-golang.postman_collection.json
+1. use command ```go get ./...``` (optional ```go mod tidy ```)
+2. use command ```run main.go```
+3. import postman with crud-golang.postman_collection.json
 
 Step to test :
 1. use command ```go test ./...```
