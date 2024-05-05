@@ -13,7 +13,7 @@ type ICustomers interface {
 	CreateCustomer(w http.ResponseWriter, r *http.Request) error
 }
 
-func NewIUser(db database.IDatabase) *Customers {
+func NewICustomer(db database.IDatabase) *Customers {
 	return &Customers{
 		Database: db,
 	}

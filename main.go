@@ -18,7 +18,7 @@ func main() {
 	if err != nil {
 		constrain.ConsoleLog.Info().Msgf("Connect DB Error: %v", err.Error())
 	}
-	customers := customers.NewIUser(db)
+	customers := customers.NewICustomer(db)
 	port := 4000
 	server := &http.Server{
 		Handler:      jsonResponseMiddleware(routes(customers)),
