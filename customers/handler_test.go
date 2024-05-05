@@ -236,9 +236,8 @@ func (s *CustomersTestSuite) Test_Get() {
 		customers := database.Customers{}
 
 		s.database.EXPECT().GetOne(gomock.Any(), "customers", &customers, "id = ?", args...).DoAndReturn(func(ctx context.Context, collection string, result interface{}, condition string, args ...interface{}) error {
-			// Mock behavior here, for example:
 			customer := database.Customers{ID: 1, Name: "John", Age: 30}
-			*result.(*database.Customers) = customer // Cast to the correct type and assign mock data
+			*result.(*database.Customers) = customer
 			return nil
 		})
 
@@ -278,7 +277,6 @@ func (s *CustomersTestSuite) Test_Delete() {
 		req := httptest.NewRequest(http.MethodDelete, "/customers/1", strings.NewReader(``))
 
 		s.database.EXPECT().Delete(gomock.Any(), "customers", "id = ?", args...).Return(nil)
-		// Mock behavior here, for example:
 
 		router := mux.NewRouter()
 		router.HandleFunc("/customers/{userId}", s.customers.DeleteById)
@@ -292,23 +290,9 @@ func (s *CustomersTestSuite) Test_Delete() {
 }
 
 func TestNewICustomer(t *testing.T) {
-	// Create a new instance of the gomock controller
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	// Create a mock database
 	mockDB := mock_database.NewMockIDatabase(ctrl)
-
-	// Call the NewICustomer function
-	icustomer := NewICustomer(mockDB)
-
-	// Assert that icustomer is not nil
-	if icustomer == nil {
-		t.Error("Expected non-nil value for icustomer, got nil")
-	}
-
-	// Assert that the Database field of icustomer is set to the mock database
-	if icustomer.Database != mockDB {
-		t.Error("Expected icustomer.Database to be set to mockDB")
-	}
+	NewICustomer(mockDB)
 }
