@@ -8,16 +8,15 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func (user *Customers) GetById(w http.ResponseWriter, r *http.Request) {
+func (c *Customers) GetById(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	vars := mux.Vars(r)
-	condition := "ID = ?"
+	condition := "id = ?"
 	var res database.Customers
-	userId := vars["userId"]
-	args := []interface{}{userId}
+	args := []interface{}{vars["userId"]}
 
-	err := user.Database.GetOne(ctx, "customers", &res, condition, args...)
+	err := c.Database.GetOne(ctx, "customers", &res, condition, args...)
 	if err != nil {
 		msgErr := fmt.Sprintf("DB Error: %v", err.Error())
 		resposeError(w, http.StatusInternalServerError, msgErr)

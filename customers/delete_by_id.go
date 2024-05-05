@@ -7,14 +7,14 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func (user *Customers) DeleteById(w http.ResponseWriter, r *http.Request) {
+func (c *Customers) DeleteById(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	vars := mux.Vars(r)
-	condition := "ID = ?"
+	condition := "id = ?"
 	args := []interface{}{vars["userId"]}
 
-	err := user.Database.Delete(ctx, "customers", condition, args...)
+	err := c.Database.Delete(ctx, "customers", condition, args...)
 	if err != nil {
 		msgErr := fmt.Sprintf("DB Error: %v", err.Error())
 		resposeError(w, http.StatusInternalServerError, msgErr)

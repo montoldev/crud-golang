@@ -8,13 +8,13 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func (user *Customers) Create(w http.ResponseWriter, r *http.Request) {
+func (c *Customers) Create(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	var body CreateCustomer
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
-		http.Error(w, "Failed to decode request body", http.StatusBadRequest)
+		resposeError(w, http.StatusBadRequest, "Failed to decode request body")
 		return
 	}
 
@@ -24,10 +24,10 @@ func (user *Customers) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = user.Database.Insert(ctx, "customers", body)
+	err = c.Database.Insert(ctx, "customers", body)
 	if err != nil {
 		msgErr := fmt.Sprintf("DB Error: %v", err.Error())
-		http.Error(w, msgErr, http.StatusInternalServerError)
+		resposeError(w, http.StatusInternalServerError, msgErr)
 		return
 	}
 
